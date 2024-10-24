@@ -10,8 +10,7 @@ Exercises
 
 from random import choice, randrange
 from string import ascii_lowercase
-from turtle import *
-
+import turtle
 from freegames import vector
 
 targets = []
@@ -26,13 +25,13 @@ def inside(point):
 
 def draw():
     """Draw letters."""
-    clear()
+    turtle.clear()
 
     for target, letter in zip(targets, letters):
-        goto(target.x, target.y)
-        write(letter, align='center', font=('Consolas', 20, 'normal'))
+        turtle.goto(target.x, target.y)
+        turtle.write(letter, align='center', font=('Consolas', 20, 'normal'))
 
-    update()
+    turtle.update()
 
 
 def move():
@@ -53,11 +52,11 @@ def move():
         if not inside(target):
             return
 
-    ontimer(move, 100)
+    turtle.ontimer(move, 100)
 
 
 def press(key):
-    """Press key."""
+    """Handle key press event."""
     global score
 
     if key in letters:
@@ -71,12 +70,16 @@ def press(key):
     print('Score:', score)
 
 
-setup(420, 420, 370, 0)
-hideturtle()
-up()
-tracer(False)
-listen()
+# Set up the screen
+turtle.setup(420, 420, 370, 0)
+turtle.hideturtle()
+turtle.penup()
+turtle.tracer(False)
+turtle.listen()
+
+# Bind key presses to the game logic
 for letter in ascii_lowercase:
-    onkey(lambda letter=letter: press(letter), letter)
+    turtle.onkey(lambda letter=letter: press(letter), letter)
+
 move()
-done()
+turtle.done()
